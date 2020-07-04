@@ -24,17 +24,6 @@ export const App = () => {
     fetchTable();
   }, []);
 
-  // useEffect(() => {
-  //   const deselecter = (event) => {
-  //     if (!tableVeiwRef.current.contains(event.target)) {
-  //       setSelected()
-  //     }
-  //   }
-
-  //   window.addEventListener('click', deselecter);
-  //   return () => window.removeEventListener('click', deselecter);
-  // }, []);
-
   const handleContentEditorChange = (event) => {
     setContentEditorValue(event.target.value);
   }
@@ -69,10 +58,10 @@ export const App = () => {
 
   const handleSelectionChange = (position) => {
     setSelected(position);
-    if (contentEditorValue === '') {
+    if (position) {
       setContentEditorValue(table.fields[position].content);
+      contentEditorRef.current.focus();
     }
-    contentEditorRef.current.focus();
   }
 
   return (

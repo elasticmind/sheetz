@@ -11,7 +11,7 @@ export const TableView = forwardRef(({ table, selected, onSelect }, ref) => {
     <table className="table is-bordered is-striped is-fullwidth" ref={ref}>
       <tbody>
         <tr className="tile">
-          <td className="tile is-2 px-1 py-1" />
+          <td className="tile is-2 px-1 py-1" onClick={() => onSelect('')} />
           {table.cols.map(col => (
             <td
               style={{ display: 'block' }}
