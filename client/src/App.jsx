@@ -3,7 +3,9 @@ import { ContentEditor } from './components/ContentEditor';
 import { TableView } from './components/TableView';
 import { Table } from './tableModel/tableModel';
 import { Notifications } from './components/Notifications';
-import './App.css'
+import { Instructions } from './components/Instructions';
+import { Footer } from './components/Footer';
+import { Header } from './components/Header';
 
 const serverBaseURL = 'http://127.0.0.1:5000';
 
@@ -67,27 +69,7 @@ export const App = () => {
 
   return (
     <div className="container is-widescreen">
-      <header className="hero is-primary">
-        <div className="hero-body">
-          <div className="container">
-            <h1 className="title">
-              Sheetz
-            </h1>
-            <h2 className="subtitle">
-              Simple, fast, persisted.
-            </h2>
-          </div>
-          <figure className="image is-128x128 decoration__sum-image">
-            <img src="/favicon.png" />
-          </figure>
-          <figure className="image is-96x96 decoration__sum-image">
-            <img src="/favicon.png" />
-          </figure>
-          <figure className="image is-64x64 decoration__sum-image">
-            <img src="/favicon.png" />
-          </figure>
-        </div>
-      </header>
+      <Header />
       <main className="container is-widescreen box">
         {
           isFetching
@@ -99,44 +81,8 @@ export const App = () => {
             </>
         }
       </main>
-      <section className="content px-6">
-        <h2>
-          Instructions
-        </h2>
-        <p>
-          Select a cell to edit its contents. Content can either be a number or a formula.
-          A formula must start with a '=' sign and it can only contain references to cells in range and plus signs.
-        </p>
-        <p>
-          Some valid formulas:
-        </p>
-        <ul>
-          <li>'=A2'</li>
-          <li>'=A2+B2+C2'</li>
-          <li>'=A2+A2+A2'</li>
-        </ul>
-        <p>
-          Some invalid formulas:
-        </p>
-        <ul>
-          <li>'A2'</li>
-          <li>'=K11'</li>
-          <li>'=A2*A3'</li>
-        </ul>
-        <p>
-          You can deselect a selected cell by clicking on the upper left corner of the table.
-        </p>
-        <p>
-          Feel free to edit as you wish, all your changes are persisted. :)
-        </p>
-      </section>
-      <footer className="footer">
-        <div className="content has-text-centered">
-          <p>
-            <strong>Sheetz</strong> by <a href="https://elasticmind.design">Tibor Zombory</a>, 2020.
-          </p>
-        </div>
-      </footer>
+      <Instructions />
+      <Footer />
     </div >
   );
 }
