@@ -93,7 +93,7 @@ export class Table {
           node.dependencies = new Set(dependencies);
           node.state = RESOLVING;
 
-          const resolvedDependencies = [...node.dependencies]
+          const resolvedDependencies = dependencies
             .map(dependency => this.resolveNode(this.fields[dependency]));
 
           const hasInvalidDependency = resolvedDependencies
