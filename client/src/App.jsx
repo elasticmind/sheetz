@@ -3,6 +3,7 @@ import { ContentEditor } from './components/ContentEditor';
 import { TableView } from './components/TableView';
 import { Table } from './tableModel/tableModel';
 import { Notifications } from './components/Notifications';
+import './App.css'
 
 const serverBaseURL = 'http://127.0.0.1:5000';
 
@@ -76,6 +77,15 @@ export const App = () => {
               Simple, fast, persisted.
             </h2>
           </div>
+          <figure className="image is-128x128 decoration__sum-image">
+            <img src="/favicon.png" />
+          </figure>
+          <figure className="image is-96x96 decoration__sum-image">
+            <img src="/favicon.png" />
+          </figure>
+          <figure className="image is-64x64 decoration__sum-image">
+            <img src="/favicon.png" />
+          </figure>
         </div>
       </header>
       <main className="container is-widescreen box">
