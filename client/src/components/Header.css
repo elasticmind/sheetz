@@ -3,16 +3,38 @@
   top: 0;
   right: 0;
   margin: 3rem 10rem;
-  opacity: 0.6;
   filter: invert();
+  animation: pulsation 2s ease-in-out 0s infinite alternate;
 }
 
 .decoration__sum-image:nth-of-type(2) {
   margin: 2rem 3rem;
-  opacity: 0.4;
+  animation-duration: 3s;
 }
 
 .decoration__sum-image:nth-of-type(3) {
   margin: 5rem -1rem;
+  animation-duration: 4s;
+}
+
+.decoration__sum-image img {
+  opacity: 0.6;
+}
+
+.decoration__sum-image:nth-of-type(2) img {
+  opacity: 0.4;
+}
+
+.decoration__sum-image:nth-of-type(3) img {
   opacity: 0.2;
+}
+
+@keyframes pulsation {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
