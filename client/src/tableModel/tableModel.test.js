@@ -96,6 +96,17 @@ describe('Table resolution', () => {
     ])
   });
 
+  test('for 1-dependency formulas with literals', () => {
+    const table = Table.of([
+      ['A1', '1'], ['B1', '=A1+2'], ['C1', '=A1+B1+3'],
+      ['A2', '=2+2'], ['B2', '=A2+7'], ['C2', '=C1+8'],
+    ]);
+
+    expectTableValuesToBe(table, [
+      ['A1', 1], ['B1', 3], ['C1', 7],
+      ['A2', 4], ['B2', 11], ['C2', 15],
+    ])
+  });
   test('for 1-level 2-dependency formula', () => {
     const table = Table.of([
       ['A1', '1'], ['B1', '2'], ['C1', '=A1+B1'],

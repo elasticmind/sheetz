@@ -87,25 +87,29 @@ export class Table {
     } else {
       let isValidFormula = node.content[0] === '=';
       if (isValidFormula) {
-        const dependencies = node.content.slice(1).trim().split(/\s*\+\s*/g);
-        const operandRegex = new RegExp(`^(${this.cols.join('|')})(${this.rows.join('|')})$`);
-        isValidFormula = dependencies.every(operand => operandRegex.test(operand))
+        const operands = node.content.slice(1).trim().split(/\s*\+\s*/g);
+        const cellRegex = new RegExp(`^(${this.cols.join('|')})(${this.rows.join('|')})$`);
+        const literalRegex = /^-?\d+$/;
+        isValidFormula = operands.every(operand => cellRegex.test(operand) || literalRegex.test(operand))
         if (isValidFormula) {
-          node.dependencies = new Set(dependencies);
+          node.dependencies = new Set(operands.filter((operand) => cellRegex.test(operand)));
           node.state = RESOLVING;
 
-          const resolvedDependencies = dependencies
-            .map(dependency => this.resolveNode(this.fields[dependency]));
+          const resolvedOperands = operands.map(operand => {
+            if (literalRegex.test(operand)) {
+              return Number(operand)
+            }
 
-          const hasInvalidDependency = resolvedDependencies
-            .some((resolvedDependency) => resolvedDependency.value === null || resolvedDependency.value instanceof Error);
-          if (hasInvalidDependency) {
+            return this.resolveNode(this.fields[operand]).value
+          });
+
+          const hasInvalidOperand = resolvedOperands
+            .some((resolvedOperand) => resolvedOperand === null || resolvedOperand instanceof Error);
+          if (hasInvalidOperand) {
             node.value = new Error('Error among dependencies!');
             node.state = RESOLVED;
           } else {
-            node.value = resolvedDependencies
-              .map((resolvedDependency) => resolvedDependency.value)
-              .reduce((sum, value) => sum + value, 0);
+            node.value = resolvedOperands.reduce((sum, value) => sum + value, 0);
             node.state = RESOLVED;
           }
         }
