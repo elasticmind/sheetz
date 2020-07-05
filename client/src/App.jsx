@@ -7,7 +7,7 @@ import { Instructions } from './components/Instructions';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 
-const serverBaseURL = 'http://127.0.0.1:5000';
+const serverBaseURL = process.env.REACT_APP_SERVER_URL;
 
 export const App = () => {
   const contentEditorRef = useRef(null);
