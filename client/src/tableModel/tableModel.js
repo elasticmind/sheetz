@@ -24,7 +24,8 @@ export class Table {
     for (const column of table.cols) {
       for (const row of table.rows) {
         const position = column + row;
-        table.fields[position] = new Node(defaults[position] || '');
+        const content = defaults[position] || '';
+        table.fields[position] = new Node(content.trim());
       }
     }
 
@@ -86,7 +87,7 @@ export class Table {
     } else {
       let isValidFormula = node.content[0] === '=';
       if (isValidFormula) {
-        const dependencies = node.content.slice(1).split('+');
+        const dependencies = node.content.slice(1).trim().split(/\s*\+\s*/g);
         const operandRegex = new RegExp(`^(${this.cols.join('|')})(${this.rows.join('|')})$`);
         isValidFormula = dependencies.every(operand => operandRegex.test(operand))
         if (isValidFormula) {
@@ -127,7 +128,7 @@ export class Table {
 
   updateNode(position, content) {
     const node = this.fields[position];
-    node.content = content;
+    node.content = content.trim();
 
     const dependantPositions = new Set([position]);
     const newlyAddedDependantPositions = new Set([position]);

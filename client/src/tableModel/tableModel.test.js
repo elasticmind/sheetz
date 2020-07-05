@@ -36,6 +36,18 @@ describe('Table resolution', () => {
     ])
   });
 
+  test('works with custom whitespacing', () => {
+    const table = Table.of([
+      ['A1', '1'], ['B1', '=A1 +A1 +    \t A1'],
+      ['A2', '3'], ['B2', '  =  A1 +B1+A2    '],
+    ]);
+
+    expectTableValuesToBe(table, [
+      ['A1', 1], ['B1', 3],
+      ['A2', 3], ['B2', 7],
+    ])
+  });
+
   test('for simple values', () => {
     const table = Table.of([
       ['A1', '1'], ['B1', '2'],
