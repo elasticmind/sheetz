@@ -27,6 +27,18 @@ export const App = () => {
     fetchTable();
   }, []);
 
+  useEffect(() => {
+    const keyDownListener = (event) => {
+      if(event.key === "Escape") {
+        setContentEditorValue('');
+        setSelected('');
+      }
+    }
+
+    document.addEventListener('keydown', keyDownListener);
+    return () => document.removeEventListener('keydown', keyDownListener);
+  }, []);
+
   const handleContentEditorChange = (event) => {
     setContentEditorValue(event.target.value);
   }
@@ -59,11 +71,14 @@ export const App = () => {
     contentEditorRef.current.blur();
   }
 
-  const handleSelectionChange = (position) => {
+  const handleSelectionChange = async (position) => {
     setSelected(position);
     if (position) {
-      setContentEditorValue(table.fields[position].content);
+      await setContentEditorValue(table.fields[position].content);
       contentEditorRef.current.focus();
+      contentEditorRef.current.setSelectionRange(0, contentEditorRef.current.value.length)
+    } else {
+      setContentEditorValue('');
     }
   }
 
